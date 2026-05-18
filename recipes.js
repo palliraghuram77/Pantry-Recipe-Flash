@@ -5,6 +5,177 @@
 // ─────────────────────────────────────────────────────────────
 
 const RECIPES = [
+  // ── PURE CHICKEN RECIPES (No Eggs) ────────────────────────────
+  {
+    name: "Chicken Curry",
+    emoji: "🍛",
+    time: "30 min",
+    difficulty: "Medium",
+    servings: 2,
+    tags: ["Indian", "Curry", "Chicken"],
+    ingredients: ["chicken", "onion", "tomato", "garlic", "ginger", "chili", "oil", "salt"],
+    steps: [
+      "Heat oil in a pot over medium heat.",
+      "Add minced garlic and ginger, cook for 1 minute.",
+      "Add diced onions and cook until golden (3-4 minutes).",
+      "Add diced tomatoes and green chili, cook for 2 minutes.",
+      "Add diced chicken and cook for 5 minutes until partially done.",
+      "Add salt and cover, simmer for 15-20 minutes until chicken is tender.",
+      "Serve hot with rice or bread."
+    ]
+  },
+
+  {
+    name: "Chicken Fried Rice",
+    emoji: "🍚",
+    time: "15 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Rice", "Chicken", "Quick"],
+    ingredients: ["rice", "chicken", "onion", "garlic", "oil", "soy sauce", "salt"],
+    steps: [
+      "Heat oil in a wok or large pan over high heat.",
+      "Add minced garlic and diced onion, stir-fry for 1 minute.",
+      "Add diced cooked chicken and cook for 2 minutes.",
+      "Add cooked rice and break up clumps, stir-fry for 3 minutes.",
+      "Add soy sauce and salt, mix well.",
+      "Serve hot immediately."
+    ]
+  },
+
+  {
+    name: "Grilled Chicken",
+    emoji: "🍗",
+    time: "25 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Chicken", "Grilled", "Protein"],
+    ingredients: ["chicken", "lemon", "garlic", "oil", "salt", "chili", "onion"],
+    steps: [
+      "Mix oil, minced garlic, lemon juice, salt, and chili powder in a bowl.",
+      "Coat chicken pieces with this marinade and let sit for 10 minutes.",
+      "Heat a pan or grill over medium-high heat.",
+      "Grill chicken pieces for 8-10 minutes per side until golden and cooked through.",
+      "Serve hot with sliced onion and lemon wedges."
+    ]
+  },
+
+  {
+    name: "Chicken Soup",
+    emoji: "🍲",
+    time: "30 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Soup", "Chicken", "Comfort Food"],
+    ingredients: ["chicken", "onion", "garlic", "water", "salt", "pepper", "carrot"],
+    steps: [
+      "Boil water in a large pot.",
+      "Add diced chicken, diced onion, and minced garlic.",
+      "Boil for 10 minutes, skimming any scum from the surface.",
+      "Add diced carrot and salt, simmer for 15 minutes until chicken is tender.",
+      "Add pepper to taste.",
+      "Serve hot in bowls."
+    ]
+  },
+
+  {
+    name: "Chicken Tikka",
+    emoji: "🍗",
+    time: "20 min",
+    difficulty: "Medium",
+    servings: 2,
+    tags: ["Indian", "Grilled", "Chicken"],
+    ingredients: ["chicken", "yogurt", "lemon", "garlic", "ginger", "chili", "oil"],
+    steps: [
+      "Mix yogurt, minced garlic, ginger, lemon juice, and chili powder.",
+      "Marinate chicken pieces in this mixture for at least 10 minutes.",
+      "Heat oil in a pan or on a grill over medium-high heat.",
+      "Cook marinated chicken for 6-8 minutes per side until cooked through.",
+      "Serve hot with onion slices and lemon wedges."
+    ]
+  },
+
+  {
+    name: "Stir-Fried Chicken with Vegetables",
+    emoji: "🥘",
+    time: "15 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Chicken", "Vegetables", "Quick"],
+    ingredients: ["chicken", "onion", "garlic", "oil", "soy sauce", "salt", "pepper"],
+    steps: [
+      "Heat oil in a wok or large pan over high heat.",
+      "Add minced garlic and cook for 30 seconds.",
+      "Add diced chicken and stir-fry for 4-5 minutes until golden.",
+      "Add sliced onion and stir-fry for 2 minutes.",
+      "Add soy sauce, salt, and pepper, mix well.",
+      "Serve hot with rice."
+    ]
+  },
+
+  {
+    name: "Chicken with Tomato Gravy",
+    emoji: "🍛",
+    time: "25 min",
+    difficulty: "Medium",
+    servings: 2,
+    tags: ["Chicken", "Gravy", "Indian"],
+    ingredients: ["chicken", "tomato", "onion", "garlic", "oil", "salt", "chili"],
+    steps: [
+      "Heat oil in a pan over medium heat.",
+      "Fry diced onion until golden.",
+      "Add minced garlic and cook for 1 minute.",
+      "Add diced tomatoes and green chili, cook for 3 minutes.",
+      "Add diced chicken and salt, mix well.",
+      "Cover and simmer for 15-20 minutes until chicken is tender.",
+      "Serve hot with rice or bread."
+    ]
+  }
+];
+  // ── CHICKEN + EGG COMBOS ──────────────────────────────────────
+  {
+    name: "Chicken Egg Scramble",
+    emoji: "🍳",
+    time: "15 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Breakfast", "Protein", "Quick"],
+    ingredients: ["chicken", "eggs", "onion", "tomato", "chili", "oil", "salt"],
+    steps: [
+      "Heat oil in a pan over medium-high heat.",
+      "Add diced onions and sauté for 2 minutes.",
+      "Add cooked or raw diced chicken and cook for 3-4 minutes.",
+      "Add diced tomatoes and green chili, cook for 1 minute.",
+      "Beat 3-4 eggs in a bowl with salt.",
+      "Pour eggs into the pan and scramble until cooked through (3-5 minutes).",
+      "Serve hot with bread or rice."
+    ]
+  },
+
+  {
+    name: "Chicken Omelette",
+    emoji: "🍳",
+    time: "12 min",
+    difficulty: "Easy",
+    servings: 1,
+    tags: ["Breakfast", "Protein"],
+    ingredients: ["eggs", "chicken", "onion", "oil", "salt", "pepper"],
+    steps: [
+      "Beat 2-3 eggs with salt and pepper in a bowl.",
+      "Heat oil in a non-stick pan over medium heat.",
+      "Pour in the egg mixture and let it set slightly.",
+      "Add cooked diced chicken and finely chopped onion in the center.",
+      "Fold the omelette in half when the bottom is golden.",
+      "Cook for another 30 seconds and slide onto a plate.",
+      "Serve immediately with toast or bread."
+    ]
+  },
+
+  {
+    name: "Fried Eggs with Chicken",
+    emoji: "🍳",
+    time: "10 min",
+    difficulty: "
 
   // ── EGGS ─────────────────────────────────────────────────────
   {

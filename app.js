@@ -114,9 +114,30 @@ function scoreRecipe(recipe) {
 function findRecipes() {
   openCards.clear(); // collapse all open steps
 
+  // NEW: Single ingredient → show ALL recipes with that ingredient
+  if (ingredients.length === 1) {
+    const singleIng = normalize(ingredients[0]);
+    const tagMatches = RECIPES.filter(recipe => {
+      return recipe.ingredients.some(ri => 
+        normalize(ri) === singleIng || 
+        normalize(ri).includes(singleIng) ||
+        singleIng.includes(normalize(ri))
+      );
+    }).sort((a, b) => a.name.localeCompare(b.name));
+
+    if (tagMatches.length > 0) {
+      renderResults(tagMatches);
+      setTimeout(() => {
+        resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+      return;
+    }
+  }
+
+  // NORMAL: Score recipes by ingredient match percentage
   const matches = RECIPES
     .map(scoreRecipe)
-    .filter(r => r.score >= 0.40)           // need at least 40% of ingredients
+    .filter(r => r.score >= 0.30)           // lowered to 30% for better partial matches
     .sort((a, b) => b.score - a.score);     // best match first
 
   renderResults(matches);
