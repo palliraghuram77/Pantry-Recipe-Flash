@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantry Recipe Flash ⚡</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- Hero Header -->
+    <header class="hero">
+      <div class="logo">⚡</div>
+      <h1>Pantry Recipe Flash</h1>
+      <p class="tagline">Type what's in your pantry. Get a recipe in a flash.</p>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+      <!-- Ingredient Input Section -->
+      <section class="input-section">
+        <label class="input-label" for="ingredient-input">
+          What ingredients do you have?
+        </label>
+        <div class="input-row">
+          <input
+            type="text"
+            id="ingredient-input"
+            placeholder="e.g. eggs, rice, onion..."
+            autocomplete="off"
+            autocorrect="off"
+          />
+          <button id="add-btn" aria-label="Add ingredient">Add</button>
+        </div>
+        <p class="input-hint">Press <kbd>Enter</kbd> or <kbd>,</kbd> to add quickly. Add 3–8 ingredients.</p>
+
+        <!-- Ingredient Chips -->
+        <div id="chips" class="chips" role="list" aria-label="Added ingredients"></div>
+
+        <!-- Find Recipes Button -->
+        <button id="find-btn" class="find-btn" disabled>
+          ⚡ Flash Recipes
+        </button>
+      </section>
+
+      <!-- Results Section -->
+      <section id="results" class="results hidden" aria-live="polite"></section>
+
+    </main>
+
+    <footer class="footer">
+      Made with ❤️ · Works 100% offline · No API needed
+    </footer>
+
+  </div>
+
+  <script src="recipes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
