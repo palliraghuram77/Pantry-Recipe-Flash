@@ -4,10 +4,6 @@
 
 A fast, offline-first recipe finder that works with **what you actually have at home** — no fancy ingredients, no API key, no internet required.
 
-![Pantry Recipe Flash](https://img.shields.io/badge/works-offline-brightgreen) ![No API](https://img.shields.io/badge/API-none-blue) ![Vanilla JS](https://img.shields.io/badge/built%20with-vanilla%20JS-yellow)
-
----
-
 ## ✨ What it does
 
 1. **Type your ingredients** — just type what's in your kitchen (e.g. `eggs, onion, tomato`)
@@ -39,31 +35,6 @@ pantry-recipe-flash/
 ├── app.js          ← Matching logic and UI interactions
 └── README.md       ← You're here
 ```
-
----
-
-## 🚀 How to run locally
-
-No build step. No npm. Just open it.
-
-```bash
-git clone https://github.com/YOUR_USERNAME/pantry-recipe-flash.git
-cd pantry-recipe-flash
-open index.html   # macOS
-# or double-click index.html on Windows/Linux
-```
-
----
-
-## 🌐 How to deploy on GitHub Pages
-
-1. Push this repo to GitHub
-2. Go to **Settings → Pages**
-3. Set source to `main` branch, `/ (root)` folder
-4. Hit **Save** — your live URL will appear in a few minutes
-
----
-
 ## 🧠 How the matching works
 
 Each recipe has a list of ingredients. When you search:
