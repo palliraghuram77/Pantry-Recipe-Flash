@@ -1,183 +1,45 @@
 // ─────────────────────────────────────────────────────────────
-//  PANTRY RECIPE FLASH — Recipe Database
-//  40 recipes · Indian, global, everyday pantry staples
-//  Each recipe uses 4–8 common household ingredients
+//  PANTRY RECIPE FLASH — Recipe Database v2
+//  53 recipes: Indian, Asian, Western, everyday pantry staples
+//  Includes pure chicken, chicken+egg combos, and more basics
 // ─────────────────────────────────────────────────────────────
 
 const RECIPES = [
-  // ── PURE CHICKEN RECIPES (No Eggs) ────────────────────────────
-  {
-    name: "Chicken Curry",
-    emoji: "🍛",
-    time: "30 min",
-    difficulty: "Medium",
-    servings: 2,
-    tags: ["Indian", "Curry", "Chicken"],
-    ingredients: ["chicken", "onion", "tomato", "garlic", "ginger", "chili", "oil", "salt"],
-    steps: [
-      "Heat oil in a pot over medium heat.",
-      "Add minced garlic and ginger, cook for 1 minute.",
-      "Add diced onions and cook until golden (3-4 minutes).",
-      "Add diced tomatoes and green chili, cook for 2 minutes.",
-      "Add diced chicken and cook for 5 minutes until partially done.",
-      "Add salt and cover, simmer for 15-20 minutes until chicken is tender.",
-      "Serve hot with rice or bread."
-    ]
-  },
-
-  {
-    name: "Chicken Fried Rice",
-    emoji: "🍚",
-    time: "15 min",
-    difficulty: "Easy",
-    servings: 2,
-    tags: ["Rice", "Chicken", "Quick"],
-    ingredients: ["rice", "chicken", "onion", "garlic", "oil", "soy sauce", "salt"],
-    steps: [
-      "Heat oil in a wok or large pan over high heat.",
-      "Add minced garlic and diced onion, stir-fry for 1 minute.",
-      "Add diced cooked chicken and cook for 2 minutes.",
-      "Add cooked rice and break up clumps, stir-fry for 3 minutes.",
-      "Add soy sauce and salt, mix well.",
-      "Serve hot immediately."
-    ]
-  },
-
-  {
-    name: "Grilled Chicken",
-    emoji: "🍗",
-    time: "25 min",
-    difficulty: "Easy",
-    servings: 2,
-    tags: ["Chicken", "Grilled", "Protein"],
-    ingredients: ["chicken", "lemon", "garlic", "oil", "salt", "chili", "onion"],
-    steps: [
-      "Mix oil, minced garlic, lemon juice, salt, and chili powder in a bowl.",
-      "Coat chicken pieces with this marinade and let sit for 10 minutes.",
-      "Heat a pan or grill over medium-high heat.",
-      "Grill chicken pieces for 8-10 minutes per side until golden and cooked through.",
-      "Serve hot with sliced onion and lemon wedges."
-    ]
-  },
-
-  {
-    name: "Chicken Soup",
-    emoji: "🍲",
-    time: "30 min",
-    difficulty: "Easy",
-    servings: 2,
-    tags: ["Soup", "Chicken", "Comfort Food"],
-    ingredients: ["chicken", "onion", "garlic", "water", "salt", "pepper", "carrot"],
-    steps: [
-      "Boil water in a large pot.",
-      "Add diced chicken, diced onion, and minced garlic.",
-      "Boil for 10 minutes, skimming any scum from the surface.",
-      "Add diced carrot and salt, simmer for 15 minutes until chicken is tender.",
-      "Add pepper to taste.",
-      "Serve hot in bowls."
-    ]
-  },
-
-  {
-    name: "Chicken Tikka",
-    emoji: "🍗",
-    time: "20 min",
-    difficulty: "Medium",
-    servings: 2,
-    tags: ["Indian", "Grilled", "Chicken"],
-    ingredients: ["chicken", "yogurt", "lemon", "garlic", "ginger", "chili", "oil"],
-    steps: [
-      "Mix yogurt, minced garlic, ginger, lemon juice, and chili powder.",
-      "Marinate chicken pieces in this mixture for at least 10 minutes.",
-      "Heat oil in a pan or on a grill over medium-high heat.",
-      "Cook marinated chicken for 6-8 minutes per side until cooked through.",
-      "Serve hot with onion slices and lemon wedges."
-    ]
-  },
-
-  {
-    name: "Stir-Fried Chicken with Vegetables",
-    emoji: "🥘",
-    time: "15 min",
-    difficulty: "Easy",
-    servings: 2,
-    tags: ["Chicken", "Vegetables", "Quick"],
-    ingredients: ["chicken", "onion", "garlic", "oil", "soy sauce", "salt", "pepper"],
-    steps: [
-      "Heat oil in a wok or large pan over high heat.",
-      "Add minced garlic and cook for 30 seconds.",
-      "Add diced chicken and stir-fry for 4-5 minutes until golden.",
-      "Add sliced onion and stir-fry for 2 minutes.",
-      "Add soy sauce, salt, and pepper, mix well.",
-      "Serve hot with rice."
-    ]
-  },
-
-  {
-    name: "Chicken with Tomato Gravy",
-    emoji: "🍛",
-    time: "25 min",
-    difficulty: "Medium",
-    servings: 2,
-    tags: ["Chicken", "Gravy", "Indian"],
-    ingredients: ["chicken", "tomato", "onion", "garlic", "oil", "salt", "chili"],
-    steps: [
-      "Heat oil in a pan over medium heat.",
-      "Fry diced onion until golden.",
-      "Add minced garlic and cook for 1 minute.",
-      "Add diced tomatoes and green chili, cook for 3 minutes.",
-      "Add diced chicken and salt, mix well.",
-      "Cover and simmer for 15-20 minutes until chicken is tender.",
-      "Serve hot with rice or bread."
-    ]
-  }
-];
-  // ── CHICKEN + EGG COMBOS ──────────────────────────────────────
-  {
-    name: "Chicken Egg Scramble",
-    emoji: "🍳",
-    time: "15 min",
-    difficulty: "Easy",
-    servings: 2,
-    tags: ["Breakfast", "Protein", "Quick"],
-    ingredients: ["chicken", "eggs", "onion", "tomato", "chili", "oil", "salt"],
-    steps: [
-      "Heat oil in a pan over medium-high heat.",
-      "Add diced onions and sauté for 2 minutes.",
-      "Add cooked or raw diced chicken and cook for 3-4 minutes.",
-      "Add diced tomatoes and green chili, cook for 1 minute.",
-      "Beat 3-4 eggs in a bowl with salt.",
-      "Pour eggs into the pan and scramble until cooked through (3-5 minutes).",
-      "Serve hot with bread or rice."
-    ]
-  },
-
-  {
-    name: "Chicken Omelette",
-    emoji: "🍳",
-    time: "12 min",
-    difficulty: "Easy",
-    servings: 1,
-    tags: ["Breakfast", "Protein"],
-    ingredients: ["eggs", "chicken", "onion", "oil", "salt", "pepper"],
-    steps: [
-      "Beat 2-3 eggs with salt and pepper in a bowl.",
-      "Heat oil in a non-stick pan over medium heat.",
-      "Pour in the egg mixture and let it set slightly.",
-      "Add cooked diced chicken and finely chopped onion in the center.",
-      "Fold the omelette in half when the bottom is golden.",
-      "Cook for another 30 seconds and slide onto a plate.",
-      "Serve immediately with toast or bread."
-    ]
-  },
-
-  {
-    name: "Fried Eggs with Chicken",
-    emoji: "🍳",
-    time: "10 min",
-    difficulty: "
 
   // ── EGGS ─────────────────────────────────────────────────────
+  {
+    name: "Boiled Eggs",
+    emoji: "🥚",
+    time: "12 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Breakfast", "Protein", "Basic"],
+    ingredients: ["eggs", "water", "salt"],
+    steps: [
+      "Place eggs in a pot and cover with cold water.",
+      "Bring to a boil over high heat.",
+      "For soft boiled: cook 6 minutes. For hard boiled: cook 10 minutes.",
+      "Transfer to cold water immediately to stop cooking.",
+      "Peel and sprinkle with salt. Serve as is or with toast."
+    ]
+  },
+  {
+    name: "Fried Egg",
+    emoji: "🍳",
+    time: "5 min",
+    difficulty: "Easy",
+    servings: 1,
+    tags: ["Breakfast", "Basic", "Quick"],
+    ingredients: ["eggs", "oil", "salt"],
+    steps: [
+      "Heat a small amount of oil in a pan over medium heat.",
+      "Crack the egg directly into the pan gently.",
+      "Season with salt.",
+      "Cook until white is fully set (2-3 minutes) for sunny side up.",
+      "Flip and cook 30 more seconds for over easy.",
+      "Serve on toast or with rice."
+    ]
+  },
   {
     name: "Masala Omelette",
     emoji: "🍳",
@@ -196,7 +58,6 @@ const RECIPES = [
       "Fold and serve hot with bread or roti."
     ]
   },
-
   {
     name: "Scrambled Eggs",
     emoji: "🥚",
@@ -208,13 +69,12 @@ const RECIPES = [
     steps: [
       "Crack eggs into a bowl, add a splash of milk, salt and pepper. Whisk.",
       "Melt butter in a non-stick pan over low heat.",
-      "Pour in the eggs. Do NOT stir immediately — wait 30 seconds.",
-      "Gently push the eggs from the edges toward the center with a spatula.",
+      "Pour in the eggs. Wait 30 seconds before stirring.",
+      "Gently push the eggs from the edges toward the center.",
       "Remove from heat while slightly underdone — residual heat finishes them.",
       "Serve immediately on toast."
     ]
   },
-
   {
     name: "Egg Curry",
     emoji: "🍛",
@@ -224,7 +84,7 @@ const RECIPES = [
     tags: ["Indian", "Lunch", "Dinner"],
     ingredients: ["eggs", "onion", "tomato", "garlic", "garam masala", "turmeric", "oil"],
     steps: [
-      "Hard boil eggs (10 min), peel and set aside. Lightly fry them in oil until golden.",
+      "Hard boil eggs (10 min), peel and lightly fry in oil until golden.",
       "In the same pan, sauté diced onions until golden brown.",
       "Add garlic, cook 1 minute. Add tomatoes, turmeric, garam masala and salt.",
       "Cook the masala until oil separates (about 8 min).",
@@ -233,7 +93,6 @@ const RECIPES = [
       "Serve with rice or roti."
     ]
   },
-
   {
     name: "French Toast",
     emoji: "🍞",
@@ -246,11 +105,10 @@ const RECIPES = [
       "Beat together eggs, milk, and sugar in a wide bowl.",
       "Dip bread slices into the mixture, coating both sides.",
       "Melt butter in a pan over medium heat.",
-      "Cook each soaked slice for 2–3 min per side until golden.",
-      "Serve with honey, jam, or just as is."
+      "Cook each soaked slice for 2-3 min per side until golden.",
+      "Serve with honey, jam, or as is."
     ]
   },
-
   {
     name: "Egg Fried Rice",
     emoji: "🍚",
@@ -260,16 +118,31 @@ const RECIPES = [
     tags: ["Asian", "Lunch", "Leftover"],
     ingredients: ["rice", "eggs", "onion", "garlic", "soy sauce", "oil"],
     steps: [
-      "Use day-old cooked rice (or cook fresh and let it cool).",
+      "Use day-old cooked rice for best results.",
       "Heat oil in a large pan or wok on high heat.",
       "Scramble eggs in the pan, cook until just set, then push to the side.",
       "Add onion and garlic, stir fry for 2 minutes.",
-      "Add rice and stir fry everything together for 3–4 minutes.",
-      "Drizzle soy sauce over, mix well, taste and adjust salt.",
+      "Add rice and stir fry everything together for 3-4 minutes.",
+      "Drizzle soy sauce over, mix well, adjust salt.",
       "Serve hot."
     ]
   },
-
+  {
+    name: "Egg Drop Tomato Soup",
+    emoji: "🍅",
+    time: "15 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Soup", "Quick", "Asian"],
+    ingredients: ["eggs", "tomato", "garlic", "oil", "salt", "pepper"],
+    steps: [
+      "Heat oil, sauté garlic for 30 seconds.",
+      "Add diced tomatoes, cook until mushy and saucy (5 min).",
+      "Add 2 cups water, bring to a boil. Season with salt and pepper.",
+      "Beat eggs in a cup. Slowly pour in a thin stream while stirring the soup.",
+      "Simmer 1 minute. Serve hot."
+    ]
+  },
   {
     name: "Bread Omelette",
     emoji: "🥪",
@@ -287,21 +160,286 @@ const RECIPES = [
       "Flip out onto a plate, egg side up. Serve with ketchup."
     ]
   },
-
   {
-    name: "Egg Drop Tomato",
-    emoji: "🍅",
+    name: "Poached Eggs on Toast",
+    emoji: "🍳",
+    time: "10 min",
+    difficulty: "Medium",
+    servings: 1,
+    tags: ["Breakfast", "Western"],
+    ingredients: ["eggs", "bread", "butter", "salt", "pepper"],
+    steps: [
+      "Toast bread and butter it generously.",
+      "Bring a small pot of water to a gentle simmer.",
+      "Crack egg into a cup. Stir water to create a gentle whirlpool.",
+      "Slide the egg into the center gently.",
+      "Cook 3-4 minutes for runny yolk. Remove with a slotted spoon.",
+      "Place on buttered toast. Season with salt and pepper."
+    ]
+  },
+
+  // ── PURE CHICKEN ─────────────────────────────────────────────
+  {
+    name: "Simple Boiled Chicken",
+    emoji: "🍗",
+    time: "25 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Protein", "Healthy", "Basic"],
+    ingredients: ["chicken", "salt", "pepper", "water"],
+    steps: [
+      "Place chicken pieces in a pot and cover with water.",
+      "Add salt and pepper.",
+      "Bring to a boil, then reduce heat.",
+      "Simmer for 20 minutes until chicken is fully cooked through (no pink inside).",
+      "Drain and serve as is, or shred and use in other dishes.",
+      "Tip: save the broth — it makes great soup!"
+    ]
+  },
+  {
+    name: "Chicken Curry",
+    emoji: "🍛",
+    time: "35 min",
+    difficulty: "Medium",
+    servings: 3,
+    tags: ["Indian", "Dinner", "Spicy"],
+    ingredients: ["chicken", "onion", "tomato", "garlic", "turmeric", "garam masala", "oil"],
+    steps: [
+      "Heat oil in a deep pan. Add sliced onions, fry until golden brown.",
+      "Add minced garlic, cook 1 minute.",
+      "Add tomatoes, turmeric, and garam masala. Cook until oil separates (8-10 min).",
+      "Add chicken pieces, coat well in the masala.",
+      "Add half cup water, cover and cook on medium heat for 20 minutes.",
+      "Stir occasionally and check chicken is fully cooked.",
+      "Serve hot with rice or roti."
+    ]
+  },
+  {
+    name: "Butter Chicken (Simple)",
+    emoji: "🍗",
+    time: "30 min",
+    difficulty: "Medium",
+    servings: 3,
+    tags: ["Indian", "Dinner", "Creamy"],
+    ingredients: ["chicken", "tomato", "butter", "garlic", "garam masala", "salt"],
+    steps: [
+      "Cook chicken pieces in butter until golden. Set aside.",
+      "In the same pan, add more butter and garlic.",
+      "Add tomatoes and garam masala. Cook until thick and mushy.",
+      "Blend the sauce until smooth.",
+      "Add chicken back in. Simmer 10 minutes.",
+      "Add a spoon of butter at the end for richness.",
+      "Serve with naan or rice."
+    ]
+  },
+  {
+    name: "Chicken Soup",
+    emoji: "🥣",
+    time: "35 min",
+    difficulty: "Easy",
+    servings: 3,
+    tags: ["Comfort", "Healthy", "Soup"],
+    ingredients: ["chicken", "onion", "garlic", "carrot", "salt", "pepper"],
+    steps: [
+      "Place chicken in a pot with water. Bring to boil.",
+      "Add chopped onion, garlic, and carrot.",
+      "Season with salt and pepper.",
+      "Simmer covered for 25 minutes.",
+      "Remove chicken, shred it, and add back to the broth.",
+      "Taste and adjust salt. Serve hot."
+    ]
+  },
+  {
+    name: "Grilled Chicken",
+    emoji: "🍗",
+    time: "25 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Protein", "Healthy", "Grilled"],
+    ingredients: ["chicken", "lemon", "garlic", "oil", "salt", "chili"],
+    steps: [
+      "Mix oil, minced garlic, lemon juice, salt, and chili powder in a bowl.",
+      "Coat chicken pieces with this marinade and let sit for 10 minutes.",
+      "Heat a pan or grill over medium-high heat.",
+      "Grill chicken for 8-10 minutes per side until golden and cooked through.",
+      "Serve hot with sliced onion and lemon wedges."
+    ]
+  },
+  {
+    name: "Chicken with Tomato Gravy",
+    emoji: "🍛",
+    time: "25 min",
+    difficulty: "Medium",
+    servings: 2,
+    tags: ["Indian", "Gravy", "Dinner"],
+    ingredients: ["chicken", "tomato", "onion", "garlic", "oil", "salt", "chili"],
+    steps: [
+      "Heat oil in a pan over medium heat.",
+      "Fry diced onion until golden.",
+      "Add minced garlic and cook for 1 minute.",
+      "Add diced tomatoes and green chili, cook for 3 minutes.",
+      "Add diced chicken and salt, mix well.",
+      "Cover and simmer for 15-20 minutes until chicken is tender.",
+      "Serve hot with rice or bread."
+    ]
+  },
+  {
+    name: "Chicken Tikka (Simple)",
+    emoji: "🍢",
+    time: "20 min",
+    difficulty: "Medium",
+    servings: 2,
+    tags: ["Indian", "Grilled", "Chicken"],
+    ingredients: ["chicken", "yogurt", "lemon", "garlic", "garam masala", "oil", "salt"],
+    steps: [
+      "Mix yogurt, minced garlic, lemon juice, garam masala, oil and salt.",
+      "Marinate chicken pieces in this mixture for at least 10 minutes.",
+      "Heat a pan or grill over medium-high heat.",
+      "Cook marinated chicken for 6-8 minutes per side until cooked through.",
+      "Serve hot with onion slices and lemon wedges."
+    ]
+  },
+  {
+    name: "Chicken Stir Fry",
+    emoji: "🥘",
     time: "15 min",
     difficulty: "Easy",
     servings: 2,
-    tags: ["Asian", "Soup", "Comfort"],
-    ingredients: ["eggs", "tomato", "garlic", "oil", "salt", "pepper"],
+    tags: ["Asian", "Quick", "Protein"],
+    ingredients: ["chicken", "garlic", "soy sauce", "oil", "onion", "pepper"],
     steps: [
-      "Heat oil, sauté garlic for 30 seconds.",
-      "Add diced tomatoes, cook until mushy and saucy (5 min).",
-      "Add 2 cups water, bring to a boil. Season with salt and pepper.",
-      "Beat eggs in a cup. Slowly pour in a thin stream while stirring the soup.",
-      "Simmer 1 minute. Serve hot."
+      "Heat oil in a wok or large pan over high heat.",
+      "Add minced garlic and cook for 30 seconds.",
+      "Add diced chicken and stir-fry for 4-5 minutes until golden.",
+      "Add sliced onion and stir-fry for 2 minutes.",
+      "Add soy sauce and pepper, mix well.",
+      "Serve hot with rice."
+    ]
+  },
+  {
+    name: "Chicken Fried Rice",
+    emoji: "🍚",
+    time: "20 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Asian", "Rice", "Chicken"],
+    ingredients: ["chicken", "rice", "onion", "garlic", "oil", "soy sauce", "salt"],
+    steps: [
+      "Heat oil in a wok or large pan over high heat.",
+      "Add minced garlic and diced onion, stir-fry for 1 minute.",
+      "Add diced cooked chicken and cook for 2 minutes.",
+      "Add cooked rice and break up clumps, stir-fry for 3 minutes.",
+      "Add soy sauce and salt, mix well.",
+      "Serve hot immediately."
+    ]
+  },
+
+  // ── CHICKEN + EGG COMBOS ──────────────────────────────────────
+  {
+    name: "Chicken Omelette",
+    emoji: "🍳",
+    time: "12 min",
+    difficulty: "Easy",
+    servings: 1,
+    tags: ["Breakfast", "Protein", "Chicken"],
+    ingredients: ["eggs", "chicken", "onion", "oil", "salt", "pepper"],
+    steps: [
+      "Beat 2-3 eggs with salt and pepper in a bowl.",
+      "Heat oil in a non-stick pan over medium heat.",
+      "Pour in the egg mixture and let it set slightly.",
+      "Add cooked diced chicken and finely chopped onion in the center.",
+      "Fold the omelette in half when the bottom is golden.",
+      "Cook for another 30 seconds and slide onto a plate.",
+      "Serve immediately with toast or bread."
+    ]
+  },
+  {
+    name: "Chicken Egg Scramble",
+    emoji: "🍳",
+    time: "15 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Breakfast", "Protein", "Quick"],
+    ingredients: ["chicken", "eggs", "onion", "tomato", "oil", "salt", "chili"],
+    steps: [
+      "Heat oil in a pan over medium-high heat.",
+      "Add diced onions and sauté for 2 minutes.",
+      "Add cooked or raw diced chicken and cook for 3-4 minutes.",
+      "Add diced tomatoes and green chili, cook for 1 minute.",
+      "Beat 3-4 eggs in a bowl with salt.",
+      "Pour eggs into the pan and scramble until cooked through (3-5 minutes).",
+      "Serve hot with bread or rice."
+    ]
+  },
+  {
+    name: "Fried Eggs with Chicken",
+    emoji: "🍳",
+    time: "10 min",
+    difficulty: "Easy",
+    servings: 1,
+    tags: ["Breakfast", "Quick", "Protein"],
+    ingredients: ["eggs", "chicken", "oil", "salt", "pepper"],
+    steps: [
+      "Heat oil in a pan over medium heat.",
+      "Add diced or shredded cooked chicken and warm through (2 minutes).",
+      "Push chicken to the side and crack 2 eggs into the pan.",
+      "Cook until whites are set but yolk is runny (sunny side up).",
+      "Season with salt and pepper.",
+      "Serve on a plate with toast or roti."
+    ]
+  },
+  {
+    name: "Chicken Egg Fried Rice",
+    emoji: "🍚",
+    time: "20 min",
+    difficulty: "Easy",
+    servings: 2,
+    tags: ["Rice", "Chicken", "Asian"],
+    ingredients: ["rice", "eggs", "chicken", "onion", "garlic", "oil", "soy sauce"],
+    steps: [
+      "Heat oil in a large pan or wok over high heat.",
+      "Add minced garlic and diced onion, stir-fry for 1 minute.",
+      "Add diced cooked chicken and cook for 2 minutes.",
+      "Add cooked rice and break up any clumps, stir-fry for 2-3 minutes.",
+      "Push rice to the side, crack 2 eggs into the empty space, scramble quickly.",
+      "Mix eggs with rice, add soy sauce and mix well.",
+      "Serve hot."
+    ]
+  },
+  {
+    name: "Shakshuka with Chicken",
+    emoji: "🍳",
+    time: "20 min",
+    difficulty: "Medium",
+    servings: 2,
+    tags: ["Eggs", "Chicken", "Middle Eastern"],
+    ingredients: ["eggs", "tomato", "onion", "garlic", "chicken", "chili", "oil"],
+    steps: [
+      "Heat oil in a deep pan over medium heat.",
+      "Sauté diced onion and garlic for 2 minutes.",
+      "Add diced tomatoes and green chili, cook for 3 minutes.",
+      "Add cooked diced chicken and simmer for 2 minutes.",
+      "Create 2 small wells in the sauce and crack an egg into each.",
+      "Cover and cook until egg whites are set (3-4 minutes).",
+      "Serve hot with bread for dipping."
+    ]
+  },
+  {
+    name: "Boiled Egg and Chicken Bowl",
+    emoji: "🥗",
+    time: "15 min",
+    difficulty: "Easy",
+    servings: 1,
+    tags: ["Protein", "Light", "Healthy"],
+    ingredients: ["eggs", "chicken", "onion", "tomato", "oil", "salt", "lemon"],
+    steps: [
+      "Boil 2 eggs in water for 10 minutes, then cool and peel.",
+      "Dice cooked chicken into small pieces.",
+      "Chop onion and tomato finely.",
+      "Mix chicken, onion, and tomato in a bowl.",
+      "Slice boiled eggs and add to the mixture.",
+      "Drizzle with oil, lemon juice, and salt.",
+      "Serve cold as a light meal."
     ]
   },
 
@@ -315,16 +453,15 @@ const RECIPES = [
     tags: ["Indian", "Comfort", "Vegetarian"],
     ingredients: ["rice", "lentils", "onion", "potato", "carrot", "turmeric", "cumin", "oil"],
     steps: [
-      "Wash and soak rice + lentils together for 15 minutes.",
+      "Wash and soak rice and lentils together for 15 minutes.",
       "Heat oil, add cumin seeds, let them splutter.",
       "Add onion, cook until soft. Add potato and carrot chunks.",
       "Add turmeric and salt, mix well.",
-      "Add soaked rice + lentils and 4 cups water.",
+      "Add soaked rice and lentils with 4 cups water.",
       "Pressure cook for 3 whistles or simmer covered for 25 minutes.",
       "Stir well and serve with ghee on top."
     ]
   },
-
   {
     name: "Jeera Rice",
     emoji: "🍚",
@@ -342,7 +479,6 @@ const RECIPES = [
       "Fluff with a fork and serve."
     ]
   },
-
   {
     name: "Curd Rice",
     emoji: "🍚",
@@ -359,7 +495,6 @@ const RECIPES = [
       "Mix well. Serve at room temperature or chilled."
     ]
   },
-
   {
     name: "Lemon Rice",
     emoji: "🍋",
@@ -378,7 +513,6 @@ const RECIPES = [
       "Serve warm or at room temperature."
     ]
   },
-
   {
     name: "Rice Kheer",
     emoji: "🍮",
@@ -396,7 +530,6 @@ const RECIPES = [
       "Serve warm or chilled."
     ]
   },
-
   {
     name: "Vegetable Pulao",
     emoji: "🌿",
@@ -416,7 +549,7 @@ const RECIPES = [
     ]
   },
 
-  // ── LENTILS / DAL ─────────────────────────────────────────────
+  // ── LENTILS ───────────────────────────────────────────────────
   {
     name: "Dal Tadka",
     emoji: "🍲",
@@ -435,7 +568,6 @@ const RECIPES = [
       "Serve with rice or roti."
     ]
   },
-
   {
     name: "Masoor Dal",
     emoji: "🍲",
@@ -453,7 +585,6 @@ const RECIPES = [
       "Simmer together 5 minutes. Serve hot."
     ]
   },
-
   {
     name: "Spinach Dal",
     emoji: "🌿",
@@ -482,7 +613,7 @@ const RECIPES = [
     tags: ["Italian", "Vegetarian", "Quick"],
     ingredients: ["pasta", "garlic", "olive oil", "chili flakes", "salt"],
     steps: [
-      "Boil pasta in salted water until al dente. Reserve ½ cup pasta water.",
+      "Boil pasta in salted water until al dente. Reserve half cup pasta water.",
       "Heat olive oil on low, add lots of sliced garlic.",
       "Cook garlic gently until golden (not burnt).",
       "Add chili flakes, then drained pasta.",
@@ -490,7 +621,6 @@ const RECIPES = [
       "Taste, adjust salt. Serve immediately."
     ]
   },
-
   {
     name: "Pasta with Tomato Sauce",
     emoji: "🍝",
@@ -508,7 +638,6 @@ const RECIPES = [
       "Serve hot."
     ]
   },
-
   {
     name: "Tuna Pasta",
     emoji: "🐟",
@@ -525,7 +654,6 @@ const RECIPES = [
       "Toss well and serve."
     ]
   },
-
   {
     name: "Minestrone Soup",
     emoji: "🥣",
@@ -559,11 +687,9 @@ const RECIPES = [
       "Add onion and cook until translucent.",
       "Add potatoes, turmeric, and salt. Mix well.",
       "Cover and cook on medium-low heat for 15 minutes, stirring occasionally.",
-      "Potatoes should be soft and lightly golden.",
       "Serve with roti or as a side."
     ]
   },
-
   {
     name: "Mashed Potato",
     emoji: "🥔",
@@ -580,7 +706,6 @@ const RECIPES = [
       "Season with salt and pepper. Serve hot."
     ]
   },
-
   {
     name: "Potato Soup",
     emoji: "🥣",
@@ -594,24 +719,7 @@ const RECIPES = [
       "Add cubed potatoes and enough water to cover. Simmer 15 min.",
       "When potatoes are soft, blend or mash until smooth.",
       "Stir in milk, season with salt and pepper.",
-      "Heat gently (don't boil after adding milk). Serve hot."
-    ]
-  },
-
-  {
-    name: "Crispy Potato Wedges",
-    emoji: "🍟",
-    time: "35 min",
-    difficulty: "Easy",
-    servings: 2,
-    tags: ["Snack", "Western"],
-    ingredients: ["potato", "olive oil", "garlic", "salt", "pepper"],
-    steps: [
-      "Preheat oven to 220°C. Cut potatoes into wedges.",
-      "Toss wedges with olive oil, minced garlic, salt, and pepper.",
-      "Spread on a baking tray in a single layer.",
-      "Bake 30–35 minutes, flipping halfway, until golden and crispy.",
-      "Serve with ketchup or yogurt dip."
+      "Heat gently and serve hot."
     ]
   },
 
@@ -627,12 +735,11 @@ const RECIPES = [
     steps: [
       "Mix softened butter with minced garlic and a pinch of salt.",
       "Spread generously on bread slices.",
-      "Toast in oven at 200°C for 5–7 minutes until golden.",
+      "Toast in oven at 200°C for 5-7 minutes until golden.",
       "Alternatively, pan-toast on a dry pan until crispy.",
       "Serve immediately."
     ]
   },
-
   {
     name: "Grilled Cheese Sandwich",
     emoji: "🥪",
@@ -645,12 +752,11 @@ const RECIPES = [
       "Butter one side of each bread slice.",
       "Place cheese between the unbuttered sides.",
       "Heat a pan over medium heat.",
-      "Place sandwich butter-side down. Cook 2–3 min until golden.",
+      "Place sandwich butter-side down. Cook 2-3 min until golden.",
       "Flip and cook the other side until cheese melts.",
       "Cut diagonally and serve hot."
     ]
   },
-
   {
     name: "Bread Upma",
     emoji: "🍞",
@@ -665,30 +771,12 @@ const RECIPES = [
       "Add onion and fry until translucent.",
       "Add tomato and salt. Cook until tomato is soft.",
       "Add bread cubes and toss everything together.",
-      "Stir fry for 2–3 minutes until bread absorbs the flavors.",
+      "Stir fry for 2-3 minutes until bread absorbs the flavors.",
       "Serve hot with ketchup or chutney."
     ]
   },
 
-  {
-    name: "Poached Eggs on Toast",
-    emoji: "🍳",
-    time: "10 min",
-    difficulty: "Medium",
-    servings: 1,
-    tags: ["Breakfast", "Western"],
-    ingredients: ["eggs", "bread", "butter", "salt", "pepper"],
-    steps: [
-      "Toast bread and butter it generously.",
-      "Bring a small pot of water to a gentle simmer. Add a splash of vinegar if you have it.",
-      "Crack egg into a cup. Stir the water to create a gentle whirlpool.",
-      "Slide the egg into the center gently.",
-      "Cook 3–4 minutes for runny yolk. Remove with a slotted spoon.",
-      "Place on buttered toast. Season with salt and pepper."
-    ]
-  },
-
-  // ── FLOUR / ROTI ─────────────────────────────────────────────
+  // ── FLOUR ────────────────────────────────────────────────────
   {
     name: "Roti / Chapati",
     emoji: "🫓",
@@ -702,12 +790,10 @@ const RECIPES = [
       "Add a little oil and knead until smooth. Rest 10 minutes.",
       "Divide into small balls. Roll each one into a thin circle.",
       "Heat a tawa or flat pan on high heat.",
-      "Cook each roti 30–40 seconds per side, pressing with a cloth.",
+      "Cook each roti 30-40 seconds per side, pressing with a cloth.",
       "Apply ghee or butter while hot. Stack and serve."
     ]
   },
-
-  // ── BANANA ───────────────────────────────────────────────────
   {
     name: "Banana Pancakes",
     emoji: "🥞",
@@ -726,6 +812,7 @@ const RECIPES = [
     ]
   },
 
+  // ── BANANA ───────────────────────────────────────────────────
   {
     name: "Banana Oats Smoothie",
     emoji: "🥤",
@@ -735,13 +822,12 @@ const RECIPES = [
     tags: ["Breakfast", "Healthy", "No-cook"],
     ingredients: ["banana", "oats", "milk"],
     steps: [
-      "Add banana (frozen for best results), oats, and milk to a blender.",
+      "Add banana, oats, and milk to a blender.",
       "Blend until completely smooth.",
       "Add honey or sugar if desired.",
       "Pour into a glass and drink immediately."
     ]
   },
-
   {
     name: "Yogurt Banana Bowl",
     emoji: "🍌",
@@ -769,11 +855,11 @@ const RECIPES = [
     tags: ["Indian", "Protein", "Vegetarian"],
     ingredients: ["chickpeas", "onion", "tomato", "garlic", "garam masala", "cumin", "oil"],
     steps: [
-      "If using dried chickpeas, soak overnight and pressure cook. Canned works great too.",
+      "Canned chickpeas work great — just drain and rinse.",
       "Heat oil, add cumin seeds, then onion. Cook until dark golden.",
       "Add garlic and garam masala. Stir 1 minute.",
       "Add tomatoes, cook until thick and oil separates (10 min).",
-      "Add chickpeas and ½ cup water. Mash a few chickpeas to thicken.",
+      "Add chickpeas and half cup water. Mash a few chickpeas to thicken.",
       "Simmer 10 minutes. Adjust salt.",
       "Serve with puri, roti, or rice."
     ]
@@ -797,7 +883,7 @@ const RECIPES = [
     ]
   },
 
-  // ── YOGURT ───────────────────────────────────────────────────
+  // ── YOGURT / RAITA ────────────────────────────────────────────
   {
     name: "Cucumber Raita",
     emoji: "🥒",
@@ -814,7 +900,7 @@ const RECIPES = [
     ]
   },
 
-  // ── TOMATO ───────────────────────────────────────────────────
+  // ── TOMATO DISHES ─────────────────────────────────────────────
   {
     name: "Tomato Soup",
     emoji: "🍅",
@@ -824,7 +910,6 @@ const RECIPES = [
     tags: ["Soup", "Comfort", "Vegetarian"],
     ingredients: ["tomato", "onion", "garlic", "butter", "salt", "pepper"],
     steps: [
-      "Halve tomatoes and roast in oven at 200°C for 15 min, or cook in a pot.",
       "In a pot, melt butter, cook onion and garlic until soft.",
       "Add tomatoes and 1 cup water. Simmer 10 minutes.",
       "Blend until smooth.",
@@ -832,7 +917,6 @@ const RECIPES = [
       "Serve with garlic bread."
     ]
   },
-
   {
     name: "Tomato Chutney",
     emoji: "🌶️",
@@ -850,7 +934,7 @@ const RECIPES = [
     ]
   },
 
-  // ── VEGETABLE ────────────────────────────────────────────────
+  // ── VEGETABLES ────────────────────────────────────────────────
   {
     name: "Vegetable Soup",
     emoji: "🥕",
@@ -868,7 +952,6 @@ const RECIPES = [
       "Blend half for a creamier consistency or serve as is."
     ]
   },
-
   {
     name: "Stir Fried Cabbage",
     emoji: "🥬",
@@ -881,27 +964,9 @@ const RECIPES = [
       "Shred cabbage thinly.",
       "Heat oil in a wok or large pan on high heat.",
       "Add garlic and chili, stir fry 30 seconds.",
-      "Add cabbage and toss quickly for 3–4 minutes.",
+      "Add cabbage and toss quickly for 3-4 minutes.",
       "Drizzle soy sauce, toss once more.",
       "Serve while still slightly crisp."
-    ]
-  },
-
-  // ── PEANUTS ──────────────────────────────────────────────────
-  {
-    name: "Peanut Chutney",
-    emoji: "🥜",
-    time: "10 min",
-    difficulty: "Easy",
-    servings: 4,
-    tags: ["South Indian", "Condiment", "Quick"],
-    ingredients: ["peanuts", "garlic", "chili", "oil", "salt"],
-    steps: [
-      "Dry roast peanuts until golden, let cool.",
-      "Blend peanuts with garlic, chili, salt and a little water.",
-      "Blend until smooth or slightly chunky.",
-      "Heat oil, add mustard seeds if you have them, pour over chutney.",
-      "Serve with idli, dosa, or as a dip."
     ]
   },
 
@@ -920,8 +985,26 @@ const RECIPES = [
       "Add onion and cook until soft.",
       "Add 2 cups water and salt. Bring to a boil.",
       "Add roasted semolina while stirring continuously.",
-      "Cook on low heat 3–4 minutes, stirring, until thick.",
+      "Cook on low heat 3-4 minutes, stirring, until thick.",
       "Serve hot with chutney."
+    ]
+  },
+
+  // ── PEANUT ───────────────────────────────────────────────────
+  {
+    name: "Peanut Chutney",
+    emoji: "🥜",
+    time: "10 min",
+    difficulty: "Easy",
+    servings: 4,
+    tags: ["South Indian", "Condiment", "Quick"],
+    ingredients: ["peanuts", "garlic", "chili", "oil", "salt"],
+    steps: [
+      "Dry roast peanuts until golden, let cool.",
+      "Blend peanuts with garlic, chili, salt and a little water.",
+      "Blend until smooth or slightly chunky.",
+      "Heat oil, add mustard seeds if available, pour over chutney.",
+      "Serve with idli, dosa, or as a dip."
     ]
   }
 
