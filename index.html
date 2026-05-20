@@ -10,49 +10,74 @@
 
   <div class="app">
 
-    <!-- Hero Header -->
+    <!-- Header -->
     <header class="hero">
       <div class="logo">⚡</div>
       <h1>Pantry Recipe Flash</h1>
-      <p class="tagline">Type what's in your pantry. Get a recipe in a flash.</p>
+      <p class="tagline">Type what's in your pantry. AI finds your recipe instantly.</p>
+      <button id="settings-btn" class="settings-btn" title="API Key Settings">⚙️ Setup</button>
     </header>
 
-    <!-- Main Content -->
-    <main>
+    <!-- API Key Modal -->
+    <div id="settings-modal" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>🔑 Anthropic API Key</h3>
+          <button id="close-modal" class="close-btn">×</button>
+        </div>
+        <p class="modal-desc">This app uses Claude AI to generate recipes. Add your API key to get started.</p>
+        <input
+          type="password"
+          id="api-key-input"
+          placeholder="sk-ant-api03-..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <div class="modal-hint">
+          Get your key free at
+          <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>
+          → API Keys
+        </div>
+        <div class="modal-actions">
+          <button id="save-key-btn" class="save-btn">Save & Continue</button>
+          <button id="clear-key-btn" class="clear-btn">Clear Key</button>
+        </div>
+        <p class="modal-note">🔒 Your key is stored only in your browser. Never shared.</p>
+      </div>
+    </div>
 
-      <!-- Ingredient Input Section -->
+    <!-- Main -->
+    <main>
       <section class="input-section">
-        <label class="input-label" for="ingredient-input">
-          What ingredients do you have?
-        </label>
+        <label class="input-label" for="ingredient-input">What ingredients do you have?</label>
         <div class="input-row">
           <input
             type="text"
             id="ingredient-input"
-            placeholder="e.g. eggs, rice, onion..."
+            placeholder="e.g. eggs, chicken, onion..."
             autocomplete="off"
             autocorrect="off"
           />
-          <button id="add-btn" aria-label="Add ingredient">Add</button>
+          <button id="add-btn">Add</button>
         </div>
-        <p class="input-hint">Press <kbd>Enter</kbd> or <kbd>,</kbd> to add quickly. Add 3–8 ingredients.</p>
-
-        <!-- Ingredient Chips -->
-        <div id="chips" class="chips" role="list" aria-label="Added ingredients"></div>
-
-        <!-- Find Recipes Button -->
-        <button id="find-btn" class="find-btn" disabled>
-          ⚡ Flash Recipes
-        </button>
+        <p class="input-hint">Press <kbd>Enter</kbd> or <kbd>,</kbd> to add quickly.</p>
+        <div id="chips" class="chips" role="list"></div>
+        <button id="find-btn" class="find-btn" disabled>⚡ Flash Recipes with AI</button>
       </section>
 
-      <!-- Results Section -->
-      <section id="results" class="results hidden" aria-live="polite"></section>
+      <!-- Loading State -->
+      <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p class="loading-text">Claude AI is cooking up recipes for you...</p>
+        <p class="loading-sub">Analysing your ingredients and finding the best dishes</p>
+      </div>
 
+      <!-- Results -->
+      <section id="results" class="results hidden" aria-live="polite"></section>
     </main>
 
     <footer class="footer">
-      Made with ❤️ · Works 100% offline ·
+      Powered by Claude AI · Works with any ingredients · No recipe is hardcoded
     </footer>
 
   </div>

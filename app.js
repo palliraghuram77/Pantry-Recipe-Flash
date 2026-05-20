@@ -1,41 +1,80 @@
 // ─────────────────────────────────────────────────────────────
-//  PANTRY RECIPE FLASH — App Logic v2
-//  - Single ingredient → shows ALL recipes with that ingredient
-//  - Ingredient aliases (curd = yogurt, jeera = cumin, etc.)
-//  - Smarter matching threshold based on recipe size
+//  PANTRY RECIPE FLASH — Smart v4
+//  Online + API key  → Claude AI generates dynamic recipes
+//  Offline OR no key → Falls back to recipes.js automatically
 // ─────────────────────────────────────────────────────────────
 
 let ingredients = [];
 let openCards   = new Set();
 
-const inputEl   = document.getElementById('ingredient-input');
-const addBtn    = document.getElementById('add-btn');
-const chipsEl   = document.getElementById('chips');
-const findBtn   = document.getElementById('find-btn');
-const resultsEl = document.getElementById('results');
+// ── DOM References ────────────────────────────────────────────
+const inputEl     = document.getElementById('ingredient-input');
+const addBtn      = document.getElementById('add-btn');
+const chipsEl     = document.getElementById('chips');
+const findBtn     = document.getElementById('find-btn');
+const resultsEl   = document.getElementById('results');
+const loadingEl   = document.getElementById('loading');
+const settingsBtn = document.getElementById('settings-btn');
+const modal       = document.getElementById('settings-modal');
+const closeModal  = document.getElementById('close-modal');
+const apiKeyInput = document.getElementById('api-key-input');
+const saveKeyBtn  = document.getElementById('save-key-btn');
+const clearKeyBtn = document.getElementById('clear-key-btn');
 
-const ALIASES = {
-  'chicken'       : ['chicken breast','chicken pieces','boiled chicken','raw chicken','chicken thigh','chicken drumstick','cooked chicken'],
-  'oil'           : ['olive oil','vegetable oil','cooking oil','sunflower oil','coconut oil'],
-  'chili'         : ['green chili','red chili','chilli','chili flakes','chilli flakes','green chilli'],
-  'lentils'       : ['dal','masoor','red lentils','yellow lentils','moong dal','toor dal'],
-  'red lentils'   : ['masoor dal','masoor','lentils'],
-  'flour'         : ['wheat flour','all purpose flour','maida','atta','whole wheat flour'],
-  'semolina'      : ['rava','sooji','suji'],
-  'yogurt'        : ['curd','dahi','greek yogurt','plain yogurt'],
-  'mustard seeds' : ['mustard','rai','sarson'],
-  'garam masala'  : ['masala','spice mix','mixed spices'],
-  'soy sauce'     : ['soy','soysauce','dark soy'],
-  'butter'        : ['ghee','margarine'],
-  'capsicum'      : ['bell pepper','pepper'],
-  'potato'        : ['aloo','potatoes'],
-  'onion'         : ['onions','shallot'],
-  'garlic'        : ['garlic cloves','garlic paste'],
-  'turmeric'      : ['haldi','turmeric powder'],
-  'cumin'         : ['jeera','cumin seeds','cumin powder'],
-  'tomato'        : ['tomatoes','cherry tomato'],
-};
+// ── API Key Management ────────────────────────────────────────
+function getApiKey()      { return localStorage.getItem('anthropic_api_key') || ''; }
+function saveApiKey(key)  { localStorage.setItem('anthropic_api_key', key.trim()); }
+function clearApiKey()    { localStorage.removeItem('anthropic_api_key'); }
+function isKeySet()       { return getApiKey().startsWith('sk-'); }
+function isOnline()       { return navigator.onLine; }
 
+function updateSettingsBtn() {
+  if (isKeySet()) {
+    settingsBtn.textContent = '✅ AI Ready';
+    settingsBtn.style.background = '#E8F7EE';
+    settingsBtn.style.color = '#1E6B3D';
+    settingsBtn.style.borderColor = '#A8DFC0';
+  } else {
+    settingsBtn.textContent = '⚙️ Setup AI';
+    settingsBtn.style.background = '';
+    settingsBtn.style.color = '';
+    settingsBtn.style.borderColor = '';
+  }
+}
+
+// ── Settings Modal ────────────────────────────────────────────
+settingsBtn.addEventListener('click', () => {
+  apiKeyInput.value = getApiKey();
+  modal.classList.remove('hidden');
+  apiKeyInput.focus();
+});
+
+closeModal.addEventListener('click', () => modal.classList.add('hidden'));
+modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+
+saveKeyBtn.addEventListener('click', () => {
+  const key = apiKeyInput.value.trim();
+  if (!key.startsWith('sk-')) {
+    apiKeyInput.style.borderColor = '#E8622A';
+    return;
+  }
+  saveApiKey(key);
+  modal.classList.add('hidden');
+  updateSettingsBtn();
+});
+
+clearKeyBtn.addEventListener('click', () => {
+  clearApiKey();
+  apiKeyInput.value = '';
+  updateSettingsBtn();
+});
+
+apiKeyInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') saveKeyBtn.click();
+  apiKeyInput.style.borderColor = '';
+});
+
+// ── Add / Remove Ingredients ──────────────────────────────────
 function addIngredient() {
   const raw = inputEl.value.trim();
   if (!raw) return;
@@ -51,11 +90,7 @@ function removeIngredient(ing) {
   ingredients = ingredients.filter(i => i !== ing);
   renderChips();
   updateFindBtn();
-  if (!resultsEl.classList.contains('hidden') && ingredients.length > 0) {
-    findRecipes();
-  } else if (ingredients.length === 0) {
-    resultsEl.classList.add('hidden');
-  }
+  if (ingredients.length === 0) resultsEl.classList.add('hidden');
 }
 
 function renderChips() {
@@ -63,14 +98,34 @@ function renderChips() {
   chipsEl.innerHTML = ingredients.map(ing => `
     <span class="chip" role="listitem">
       ${ing}
-      <button onclick="removeIngredient('${ing}')" aria-label="Remove ${ing}" title="Remove">×</button>
-    </span>
-  `).join('');
+      <button onclick="removeIngredient('${ing}')" aria-label="Remove ${ing}">×</button>
+    </span>`).join('');
 }
 
 function updateFindBtn() {
   findBtn.disabled = ingredients.length === 0;
 }
+
+// ── OFFLINE FALLBACK: Local Recipe Matching ───────────────────
+
+const ALIASES = {
+  'chicken'       : ['chicken breast','chicken pieces','boiled chicken','raw chicken','chicken thigh','cooked chicken'],
+  'oil'           : ['olive oil','vegetable oil','cooking oil','sunflower oil'],
+  'chili'         : ['green chili','red chili','chilli','chili flakes','green chilli'],
+  'lentils'       : ['dal','masoor','red lentils','yellow lentils','moong dal','toor dal'],
+  'red lentils'   : ['masoor dal','masoor','lentils'],
+  'flour'         : ['wheat flour','maida','atta','all purpose flour'],
+  'semolina'      : ['rava','sooji','suji'],
+  'yogurt'        : ['curd','dahi','greek yogurt'],
+  'mustard seeds' : ['mustard','rai'],
+  'garam masala'  : ['masala','spice mix'],
+  'soy sauce'     : ['soy','soysauce'],
+  'butter'        : ['ghee','margarine'],
+  'potato'        : ['aloo'],
+  'turmeric'      : ['haldi'],
+  'cumin'         : ['jeera','cumin seeds'],
+  'tomato'        : ['tomatoes'],
+};
 
 function normalize(str) {
   return str.toLowerCase().trim()
@@ -92,10 +147,10 @@ function expandWithAliases(ingredient) {
 }
 
 function userHas(recipeIng) {
-  const recipeExpanded = expandWithAliases(recipeIng);
+  const recipeExp = expandWithAliases(recipeIng);
   return ingredients.some(ui => {
-    const userExpanded = expandWithAliases(ui);
-    return recipeExpanded.some(re => userExpanded.some(ue => ue === re || ue.includes(re) || re.includes(ue)));
+    const userExp = expandWithAliases(ui);
+    return recipeExp.some(re => userExp.some(ue => ue === re || ue.includes(re) || re.includes(ue)));
   });
 }
 
@@ -115,10 +170,8 @@ function meetsThreshold(recipe) {
   return recipe.score >= 0.40;
 }
 
-function findRecipes() {
-  openCards.clear();
-
-  // SINGLE INGREDIENT → show ALL recipes containing that ingredient
+function findLocalRecipes() {
+  // Single ingredient → show ALL recipes with that ingredient
   if (ingredients.length === 1) {
     const singleAliases = expandWithAliases(ingredients[0]);
     const tagMatches = RECIPES.filter(recipe =>
@@ -127,50 +180,176 @@ function findRecipes() {
         return singleAliases.some(sa => riAliases.some(ra => ra === sa || ra.includes(sa) || sa.includes(ra)));
       })
     ).sort((a, b) => a.name.localeCompare(b.name));
-
-    if (tagMatches.length > 0) {
-      renderResults(tagMatches);
-      setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-      return;
-    }
+    if (tagMatches.length > 0) return tagMatches;
   }
 
-  // MULTIPLE ingredients → score and rank
-  const matches = RECIPES.map(scoreRecipe).filter(meetsThreshold).sort((a, b) => b.score - a.score);
-  renderResults(matches);
-  setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  // Multiple ingredients → score and rank
+  return RECIPES
+    .map(scoreRecipe)
+    .filter(meetsThreshold)
+    .sort((a, b) => b.score - a.score);
 }
 
-function renderResults(matches) {
+// ── Claude AI API Call ────────────────────────────────────────
+async function callClaudeAPI() {
+  const prompt = `You are a recipe assistant. The user has these ingredients: ${ingredients.join(', ')}.
+
+Generate 6 to 8 diverse and practical recipes. Rules:
+- Include 2-3 recipes they can make with EXACTLY or mostly these ingredients
+- Include 3-4 recipes needing just 1-3 more common items (salt, oil, water, garlic, etc)
+- Cover different meal types: breakfast, lunch, dinner, snacks
+- Mix of cuisines: Indian, Asian, Western, etc
+- Keep all recipes simple and realistic for a home cook
+
+Return ONLY a valid JSON array. No markdown. No backticks. No explanation. Just raw JSON.
+Each object must have exactly:
+{
+  "name": "Recipe Name",
+  "emoji": "🍳",
+  "time": "20 min",
+  "difficulty": "Easy",
+  "servings": 2,
+  "tags": ["Indian", "Quick"],
+  "ingredients": ["all", "ingredients", "needed"],
+  "steps": ["Step 1", "Step 2", "Step 3"]
+}`;
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': getApiKey(),
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 4000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.error?.message || `API error ${response.status}`);
+  }
+
+  const data  = await response.json();
+  const text  = data.content[0].text.trim().replace(/```json|```/g, '').trim();
+  return JSON.parse(text);
+}
+
+// ── Mark have / missing for AI recipes ───────────────────────
+function markIngredients(recipe) {
+  const userSet = ingredients.map(i => i.toLowerCase());
+  const have    = [];
+  const missing = [];
+  recipe.ingredients.forEach(ri => {
+    const riLow    = ri.toLowerCase();
+    const userHasIt = userSet.some(u =>
+      riLow.includes(u) || u.includes(riLow) ||
+      riLow.split(' ').some(word => u.includes(word) && word.length > 2)
+    );
+    if (userHasIt) have.push(ri);
+    else missing.push(ri);
+  });
+  return { ...recipe, have, missing };
+}
+
+// ── Main: Find Recipes ────────────────────────────────────────
+async function findRecipes() {
+  if (ingredients.length === 0) return;
+
+  openCards.clear();
+  resultsEl.classList.add('hidden');
+  findBtn.disabled = true;
+
+  // ── Decision: AI or Local? ────────────────────────────────
+  const useAI = isKeySet() && isOnline();
+
+  if (useAI) {
+    // Show loading spinner
+    loadingEl.classList.remove('hidden');
+    findBtn.textContent = '⏳ AI is cooking...';
+
+    try {
+      const raw     = await callClaudeAPI();
+      const recipes = raw.map(markIngredients);
+      loadingEl.classList.add('hidden');
+      renderResults(recipes, 'ai');
+    } catch (err) {
+      // AI failed — silently fall back to local
+      loadingEl.classList.add('hidden');
+      console.warn('AI failed, falling back to local recipes:', err.message);
+      const local = findLocalRecipes();
+      renderResults(local, 'fallback', err.message);
+    }
+  } else {
+    // No key or offline — use local instantly
+    const local = findLocalRecipes();
+    renderResults(local, isOnline() ? 'local' : 'offline');
+  }
+
+  findBtn.disabled = false;
+  findBtn.textContent = '⚡ Flash Recipes with AI';
+}
+
+// ── Render Results ────────────────────────────────────────────
+function renderResults(recipes, source, errorMsg) {
   resultsEl.classList.remove('hidden');
-  if (matches.length === 0) {
+
+  // Source badge
+  const badges = {
+    ai       : '✨ Claude AI',
+    local    : '📚 Local recipes (add API key for AI)',
+    offline  : '📴 Offline mode — local recipes',
+    fallback : '📚 Local recipes (AI unavailable)'
+  };
+  const badgeColors = {
+    ai       : 'badge-ai',
+    local    : 'badge-local',
+    offline  : 'badge-offline',
+    fallback : 'badge-local'
+  };
+
+  if (!recipes || recipes.length === 0) {
     resultsEl.innerHTML = `
       <div class="no-results">
         <span class="emoji">😅</span>
         <p>No recipes found with those ingredients.</p>
-        <small>Try adding common items like <strong>onion</strong>, <strong>garlic</strong>, <strong>rice</strong>, <strong>eggs</strong>, or <strong>chicken</strong>.</small>
+        <small>Try adding more like onion, garlic, rice, or eggs.</small>
       </div>`;
+    setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
     return;
   }
+
   resultsEl.innerHTML = `
     <div class="results-header">
-      <h2>${matches.length} recipe${matches.length !== 1 ? 's' : ''} found</h2>
-      <span>using ${ingredients.length} ingredient${ingredients.length !== 1 ? 's' : ''}</span>
+      <h2>${recipes.length} recipe${recipes.length !== 1 ? 's' : ''} found</h2>
+      <span class="source-badge ${badgeColors[source]}">${badges[source]}</span>
     </div>
-    <div class="cards" id="cards-container">
-      ${matches.map((recipe, i) => renderCard(recipe, i)).join('')}
+    ${errorMsg ? `<p class="fallback-note">⚠️ AI error: ${errorMsg}</p>` : ''}
+    <div class="cards">
+      ${recipes.map((recipe, i) => renderCard(recipe, i)).join('')}
     </div>`;
+
+  setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 }
 
+// ── Render Card ───────────────────────────────────────────────
 function renderCard(recipe, index) {
-  const pct        = Math.round((recipe.score || 1) * 100);
-  const colorClass = pct === 100 ? 'perfect' : pct >= 65 ? 'good' : 'partial';
+  const have       = recipe.have    || recipe.ingredients;
+  const missing    = recipe.missing || [];
+  const total      = recipe.ingredients.length;
+  const pct        = total > 0 ? Math.round((have.length / total) * 100) : 100;
+  const colorClass = pct === 100 ? 'perfect' : pct >= 60 ? 'good' : 'partial';
+
   return `
-    <div class="card ${colorClass}" id="card-${index}" onclick="toggleSteps(${index})"
-      role="button" tabindex="0" aria-expanded="false"
+    <div class="card ${colorClass}" id="card-${index}"
+      onclick="toggleSteps(${index})" role="button" tabindex="0" aria-expanded="false"
       onkeydown="if(event.key==='Enter'||event.key===' ')toggleSteps(${index})">
       <div class="card-top">
-        <div class="card-emoji">${recipe.emoji}</div>
+        <div class="card-emoji">${recipe.emoji || '🍽️'}</div>
         <div class="card-info">
           <h3>${recipe.name}</h3>
           <div class="card-meta">
@@ -179,46 +358,42 @@ function renderCard(recipe, index) {
             <span class="difficulty">${recipe.difficulty}</span>
           </div>
           <div class="tags-row">
-            ${recipe.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+            ${(recipe.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}
           </div>
         </div>
         <div class="match-badge ${colorClass}">${pct === 100 ? '✓' : pct + '%'}</div>
       </div>
       <div class="ingredient-status">
-        ${(recipe.have || recipe.ingredients).map(i => `<span class="have">✓ ${i}</span>`).join('')}
-        ${(recipe.missing || []).map(i => `<span class="need">+ ${i}</span>`).join('')}
+        ${have.map(i    => `<span class="have">✓ ${i}</span>`).join('')}
+        ${missing.map(i => `<span class="need">+ ${i}</span>`).join('')}
       </div>
       <div class="steps-section hidden" id="steps-${index}">
         <h4>How to make it</h4>
-        <ol class="steps">${recipe.steps.map(step => `<li>${step}</li>`).join('')}</ol>
+        <ol class="steps">${(recipe.steps || []).map(s => `<li>${s}</li>`).join('')}</ol>
       </div>
       <div class="card-footer" id="footer-${index}"><span>Tap to see steps ↓</span></div>
     </div>`;
 }
 
+// ── Toggle Steps ──────────────────────────────────────────────
 function toggleSteps(index) {
   const stepsEl  = document.getElementById(`steps-${index}`);
   const footerEl = document.getElementById(`footer-${index}`);
   const cardEl   = document.getElementById(`card-${index}`);
   const isOpen   = !stepsEl.classList.contains('hidden');
-  if (isOpen) {
-    stepsEl.classList.add('hidden');
-    footerEl.innerHTML = '<span>Tap to see steps ↓</span>';
-    footerEl.classList.remove('open');
-    cardEl.setAttribute('aria-expanded', 'false');
-    openCards.delete(index);
-  } else {
-    stepsEl.classList.remove('hidden');
-    footerEl.innerHTML = '<span>Tap to hide steps ↑</span>';
-    footerEl.classList.add('open');
-    cardEl.setAttribute('aria-expanded', 'true');
-    openCards.add(index);
-  }
+  stepsEl.classList.toggle('hidden', isOpen);
+  footerEl.innerHTML = isOpen ? '<span>Tap to see steps ↓</span>' : '<span>Tap to hide steps ↑</span>';
+  footerEl.classList.toggle('open', !isOpen);
+  cardEl.setAttribute('aria-expanded', String(!isOpen));
 }
 
+// ── Event Listeners ───────────────────────────────────────────
 addBtn.addEventListener('click', addIngredient);
+findBtn.addEventListener('click', findRecipes);
 inputEl.addEventListener('keydown', e => {
   if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addIngredient(); }
   if (e.key === 'Backspace' && inputEl.value === '' && ingredients.length > 0) removeIngredient(ingredients[ingredients.length - 1]);
 });
-findBtn.addEventListener('click', findRecipes);
+
+// ── Init ──────────────────────────────────────────────────────
+updateSettingsBtn();
