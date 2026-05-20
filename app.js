@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
-//  PANTRY RECIPE FLASH — Smart v4
-//  Online + API key  → Claude AI generates dynamic recipes
-//  Offline OR no key → Falls back to recipes.js automatically
+//  PANTRY RECIPE FLASH — Smart v5
+//  Online + Groq API key  → Groq AI generates dynamic recipes
+//  Offline OR no key      → Falls back to recipes.js automatically
 // ─────────────────────────────────────────────────────────────
 
 let ingredients = [];
@@ -22,23 +22,23 @@ const saveKeyBtn  = document.getElementById('save-key-btn');
 const clearKeyBtn = document.getElementById('clear-key-btn');
 
 // ── API Key Management ────────────────────────────────────────
-function getApiKey()      { return localStorage.getItem('anthropic_api_key') || ''; }
-function saveApiKey(key)  { localStorage.setItem('anthropic_api_key', key.trim()); }
-function clearApiKey()    { localStorage.removeItem('anthropic_api_key'); }
-function isKeySet()       { return getApiKey().startsWith('sk-'); }
-function isOnline()       { return navigator.onLine; }
+function getApiKey()   { return localStorage.getItem('groq_api_key') || ''; }
+function saveApiKey(k) { localStorage.setItem('groq_api_key', k.trim()); }
+function clearApiKey() { localStorage.removeItem('groq_api_key'); }
+function isKeySet()    { return getApiKey().startsWith('gsk_'); }
+function isOnline()    { return navigator.onLine; }
 
 function updateSettingsBtn() {
   if (isKeySet()) {
-    settingsBtn.textContent = '✅ AI Ready';
+    settingsBtn.textContent      = '✅ AI Ready';
     settingsBtn.style.background = '#E8F7EE';
-    settingsBtn.style.color = '#1E6B3D';
-    settingsBtn.style.borderColor = '#A8DFC0';
+    settingsBtn.style.color      = '#1E6B3D';
+    settingsBtn.style.borderColor= '#A8DFC0';
   } else {
-    settingsBtn.textContent = '⚙️ Setup AI';
+    settingsBtn.textContent      = '⚙️ Setup AI';
     settingsBtn.style.background = '';
-    settingsBtn.style.color = '';
-    settingsBtn.style.borderColor = '';
+    settingsBtn.style.color      = '';
+    settingsBtn.style.borderColor= '';
   }
 }
 
@@ -54,8 +54,9 @@ modal.addEventListener('click', e => { if (e.target === modal) modal.classList.a
 
 saveKeyBtn.addEventListener('click', () => {
   const key = apiKeyInput.value.trim();
-  if (!key.startsWith('sk-')) {
+  if (!key.startsWith('gsk_')) {
     apiKeyInput.style.borderColor = '#E8622A';
+    apiKeyInput.placeholder = 'Must start with gsk_...';
     return;
   }
   saveApiKey(key);
@@ -107,7 +108,6 @@ function updateFindBtn() {
 }
 
 // ── OFFLINE FALLBACK: Local Recipe Matching ───────────────────
-
 const ALIASES = {
   'chicken'       : ['chicken breast','chicken pieces','boiled chicken','raw chicken','chicken thigh','cooked chicken'],
   'oil'           : ['olive oil','vegetable oil','cooking oil','sunflower oil'],
@@ -171,7 +171,6 @@ function meetsThreshold(recipe) {
 }
 
 function findLocalRecipes() {
-  // Single ingredient → show ALL recipes with that ingredient
   if (ingredients.length === 1) {
     const singleAliases = expandWithAliases(ingredients[0]);
     const tagMatches = RECIPES.filter(recipe =>
@@ -182,27 +181,22 @@ function findLocalRecipes() {
     ).sort((a, b) => a.name.localeCompare(b.name));
     if (tagMatches.length > 0) return tagMatches;
   }
-
-  // Multiple ingredients → score and rank
-  return RECIPES
-    .map(scoreRecipe)
-    .filter(meetsThreshold)
-    .sort((a, b) => b.score - a.score);
+  return RECIPES.map(scoreRecipe).filter(meetsThreshold).sort((a, b) => b.score - a.score);
 }
 
-// ── Claude AI API Call ────────────────────────────────────────
-async function callClaudeAPI() {
-  const prompt = `You are a recipe assistant. The user has these ingredients: ${ingredients.join(', ')}.
+// ── Groq AI API Call ──────────────────────────────────────────
+async function callGroqAPI() {
+  const prompt = `The user has these ingredients: ${ingredients.join(', ')}.
 
 Generate 6 to 8 diverse and practical recipes. Rules:
 - Include 2-3 recipes they can make with EXACTLY or mostly these ingredients
-- Include 3-4 recipes needing just 1-3 more common items (salt, oil, water, garlic, etc)
+- Include 3-4 recipes needing just 1-3 more common items like salt, oil, water, garlic
 - Cover different meal types: breakfast, lunch, dinner, snacks
-- Mix of cuisines: Indian, Asian, Western, etc
+- Mix of cuisines: Indian, Asian, Western etc
 - Keep all recipes simple and realistic for a home cook
 
 Return ONLY a valid JSON array. No markdown. No backticks. No explanation. Just raw JSON.
-Each object must have exactly:
+Each object must have exactly these fields:
 {
   "name": "Recipe Name",
   "emoji": "🍳",
@@ -211,31 +205,39 @@ Each object must have exactly:
   "servings": 2,
   "tags": ["Indian", "Quick"],
   "ingredients": ["all", "ingredients", "needed"],
-  "steps": ["Step 1", "Step 2", "Step 3"]
+  "steps": ["Step 1 with clear instructions", "Step 2", "Step 3"]
 }`;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': getApiKey(),
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
+      'Authorization': `Bearer ${getApiKey()}`
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4000,
-      messages: [{ role: 'user', content: prompt }]
+      model: 'llama-3.3-70b-versatile',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a recipe assistant. Always respond with only valid JSON arrays. No markdown, no explanation, just raw JSON.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 4000
     })
   });
 
   if (!response.ok) {
     const err = await response.json();
-    throw new Error(err.error?.message || `API error ${response.status}`);
+    throw new Error(err.error?.message || `Groq API error ${response.status}`);
   }
 
-  const data  = await response.json();
-  const text  = data.content[0].text.trim().replace(/```json|```/g, '').trim();
+  const data = await response.json();
+  const text = data.choices[0].message.content.trim().replace(/```json|```/g, '').trim();
   return JSON.parse(text);
 }
 
@@ -245,7 +247,7 @@ function markIngredients(recipe) {
   const have    = [];
   const missing = [];
   recipe.ingredients.forEach(ri => {
-    const riLow    = ri.toLowerCase();
+    const riLow     = ri.toLowerCase();
     const userHasIt = userSet.some(u =>
       riLow.includes(u) || u.includes(riLow) ||
       riLow.split(' ').some(word => u.includes(word) && word.length > 2)
@@ -264,33 +266,29 @@ async function findRecipes() {
   resultsEl.classList.add('hidden');
   findBtn.disabled = true;
 
-  // ── Decision: AI or Local? ────────────────────────────────
   const useAI = isKeySet() && isOnline();
 
   if (useAI) {
-    // Show loading spinner
     loadingEl.classList.remove('hidden');
     findBtn.textContent = '⏳ AI is cooking...';
 
     try {
-      const raw     = await callClaudeAPI();
+      const raw     = await callGroqAPI();
       const recipes = raw.map(markIngredients);
       loadingEl.classList.add('hidden');
       renderResults(recipes, 'ai');
     } catch (err) {
-      // AI failed — silently fall back to local
       loadingEl.classList.add('hidden');
-      console.warn('AI failed, falling back to local recipes:', err.message);
+      console.warn('Groq AI failed, falling back to local:', err.message);
       const local = findLocalRecipes();
       renderResults(local, 'fallback', err.message);
     }
   } else {
-    // No key or offline — use local instantly
     const local = findLocalRecipes();
     renderResults(local, isOnline() ? 'local' : 'offline');
   }
 
-  findBtn.disabled = false;
+  findBtn.disabled    = false;
   findBtn.textContent = '⚡ Flash Recipes with AI';
 }
 
@@ -298,18 +296,17 @@ async function findRecipes() {
 function renderResults(recipes, source, errorMsg) {
   resultsEl.classList.remove('hidden');
 
-  // Source badge
   const badges = {
-    ai       : '✨ Claude AI',
-    local    : '📚 Local recipes (add API key for AI)',
-    offline  : '📴 Offline mode — local recipes',
-    fallback : '📚 Local recipes (AI unavailable)'
+    ai      : '⚡ Groq AI',
+    local   : '📚 Local recipes — add Groq key for AI',
+    offline : '📴 Offline mode — local recipes',
+    fallback: '📚 Local recipes — AI unavailable'
   };
   const badgeColors = {
-    ai       : 'badge-ai',
-    local    : 'badge-local',
-    offline  : 'badge-offline',
-    fallback : 'badge-local'
+    ai      : 'badge-ai',
+    local   : 'badge-local',
+    offline : 'badge-offline',
+    fallback: 'badge-local'
   };
 
   if (!recipes || recipes.length === 0) {

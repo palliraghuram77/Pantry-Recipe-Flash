@@ -22,20 +22,20 @@
     <div id="settings-modal" class="modal-overlay hidden">
       <div class="modal">
         <div class="modal-header">
-          <h3>🔑 Anthropic API Key</h3>
+          <h3>🔑 Groq API Key</h3>
           <button id="close-modal" class="close-btn">×</button>
         </div>
-        <p class="modal-desc">This app uses Claude AI to generate recipes. Add your API key to get started.</p>
+        <p class="modal-desc">This app uses Groq AI to generate recipes. Add your free Groq API key to get started.</p>
         <input
           type="password"
           id="api-key-input"
-          placeholder="sk-ant-api03-..."
+          placeholder="gsk_..."
           autocomplete="off"
           spellcheck="false"
         />
         <div class="modal-hint">
           Get your key free at
-          <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a>
+          <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a>
           → API Keys
         </div>
         <div class="modal-actions">
@@ -68,7 +68,7 @@
       <!-- Loading State -->
       <div id="loading" class="loading hidden">
         <div class="spinner"></div>
-        <p class="loading-text">Claude AI is cooking up recipes for you...</p>
+        <p class="loading-text">Groq AI is cooking up recipes for you...</p>
         <p class="loading-sub">Analysing your ingredients and finding the best dishes</p>
       </div>
 
@@ -77,7 +77,7 @@
     </main>
 
     <footer class="footer">
-      Powered by Claude AI · Works with any ingredients · No recipe is hardcoded
+      Powered by Groq AI · Works with any ingredients · No recipe is hardcoded
     </footer>
 
   </div>
